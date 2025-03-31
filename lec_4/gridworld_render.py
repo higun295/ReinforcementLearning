@@ -4,10 +4,10 @@ import matplotlib.pyplot as plt
 
 
 class Renderer:
-    def __init__(self, reward_map, goal_state, wall_state):
+    def __init__(self, reward_map, goal_state, wall_states):
         self.reward_map = reward_map
         self.goal_state = goal_state
-        self.wall_state = wall_state
+        self.wall_states = wall_states if isinstance(wall_states, list) else [wall_states]
         self.ys = len(self.reward_map)
         self.xs = len(self.reward_map[0])
 
@@ -38,7 +38,6 @@ class Renderer:
             cmap = matplotlib.colors.LinearSegmentedColormap.from_list(
                 'colormap_name', color_list)
 
-            # dict -> ndarray
             v_dict = v
             v = np.zeros(self.reward_map.shape)
             for state, value in v_dict.items():
@@ -62,7 +61,7 @@ class Renderer:
                         txt = txt + ' (GOAL)'
                     ax.text(x+.1, ys-y-0.9, txt)
 
-                if (v is not None) and state != self.wall_state:
+                if (v is not None) and state not in self.wall_states:
                     if print_value:
                         offsets = [(0.4, -0.15), (-0.15, -0.3)]
                         key = 0
@@ -70,7 +69,7 @@ class Renderer:
                         offset = offsets[key]
                         ax.text(x+offset[0], ys-y+offset[1], "{:12.2f}".format(v[y, x]))
 
-                if policy is not None and state != self.wall_state:
+                if policy is not None and state not in self.wall_states:
                     actions = policy[state]
                     max_actions = [kv[0] for kv in actions.items() if kv[1] == max(actions.values())]
 
@@ -83,7 +82,7 @@ class Renderer:
                             continue
                         ax.text(x+0.45+offset[0], ys-y-0.5+offset[1], arrow)
 
-                if state == self.wall_state:
+                if state in self.wall_states:
                     ax.add_patch(plt.Rectangle((x,ys-y-1), 1, 1, fc=(0.4, 0.4, 0.4, 1.)))
         plt.show()
 
@@ -99,7 +98,6 @@ class Renderer:
         qmin = -1 * qmax
         qmax = 1 if qmax < 1 else qmax
         qmin = -1 if qmin > -1 else qmin
-
 
         color_list = ['red', 'white', 'green']
         cmap = matplotlib.colors.LinearSegmentedColormap.from_list(
@@ -133,19 +131,16 @@ class Renderer:
                         2: (-0.2, 0.4),
                         3: (0.4, 0.4),
                     }
-                    if state == self.wall_state:
+                    if state in self.wall_states:
                         ax.add_patch(plt.Rectangle((tx, ty), 1, 1, fc=(0.4, 0.4, 0.4, 1.)))
-                    elif state in self.goal_state:
+                    elif state == self.goal_state:
                         ax.add_patch(plt.Rectangle((tx, ty), 1, 1, fc=(0., 1., 0., 1.)))
                     else:
-
                         tq = q[(state, action)]
-                        color_scale = 0.5 + (tq / qmax) / 2  # normalize: 0.0-1.0
-
+                        color_scale = 0.5 + (tq / qmax) / 2
                         poly = plt.Polygon(action_map[action],fc=cmap(color_scale))
                         ax.add_patch(poly)
-
-                        offset= offset_map[action]
+                        offset = offset_map[action]
                         ax.text(tx+offset[0], ty+offset[1], "{:12.2f}".format(tq))
         plt.show()
 
@@ -154,7 +149,9 @@ class Renderer:
             for y in range(self.ys):
                 for x in range(self.xs):
                     state = (y, x)
-                    qs = [q[state, action] for action in range(4)]  # action_size
+                    if state in self.wall_states:
+                        continue
+                    qs = [q[state, action] for action in range(4)]
                     max_action = np.argmax(qs)
                     probs = {0:0.0, 1:0.0, 2:0.0, 3:0.0}
                     probs[max_action] = 1

@@ -12,13 +12,15 @@ class GridWorld:
         }
 
         self.reward_map = np.array(  # 보상 맵(각 좌표의 보상 값)
-            [[0, 0, 0, 1.0],
-             [0, None, 0, -1.0],
-             [0, 0, 0, 0]]
+            [[0, 0, 0, -1.0, 1.0],
+             [0, 0, 0, 0, 0],
+             [0, None, None, 0, 0],
+             [0, 0, 0, 0, -1.0],
+             [0, 0, 0, 0, 0]]
         )
-        self.goal_state = (0, 3)    # 목표 상태(좌표)
-        self.wall_state = (1, 1)    # 벽 상태(좌표)
-        self.start_state = (2, 0)   # 시작 상태(좌표)
+        self.goal_state = (0, 4)    # 목표 상태(좌표)
+        self.wall_states = [(2, 1), (2, 2)]    # 벽 상태(좌표)
+        self.start_state = (4, 0)   # 시작 상태(좌표)
         self.agent_state = self.start_state   # 에이전트 초기 상태(좌표)
 
     @property
@@ -51,13 +53,14 @@ class GridWorld:
         # 이동한 위치가 그리드 월드의 테두리 밖이나 벽인가?
         if nx < 0 or nx >= self.width or ny < 0 or ny >= self.height:
             next_state = state
-        elif next_state == self.wall_state:
+        elif next_state in self.wall_states:
             next_state = state
 
         return next_state  # 다음 상태 반환
 
     def reward(self, state, action, next_state):
-        return self.reward_map[next_state]
+        r = self.reward_map[next_state]
+        return 0 if r is None else r
 
     def reset(self):
         self.agent_state = self.start_state
@@ -73,11 +76,9 @@ class GridWorld:
         return next_state, reward, done
 
     def render_v(self, v=None, policy=None, print_value=True):
-        renderer = render_helper.Renderer(self.reward_map, self.goal_state,
-                                          self.wall_state)
+        renderer = render_helper.Renderer(self.reward_map, self.goal_state, self.wall_states)
         renderer.render_v(v, policy, print_value)
 
     def render_q(self, q=None, print_value=True):
-        renderer = render_helper.Renderer(self.reward_map, self.goal_state,
-                                          self.wall_state)
+        renderer = render_helper.Renderer(self.reward_map, self.goal_state, self.wall_states)
         renderer.render_q(q, print_value)
