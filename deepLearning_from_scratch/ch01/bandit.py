@@ -1,4 +1,6 @@
 import numpy as np
+import matplotlib.pyplot as plt
+
 
 class Bandit:
     def __init__(self, arms=10):
@@ -8,8 +10,9 @@ class Bandit:
         rate = self.rates[arm]
         if rate > np.random.rand():
             return 1
-        else :
+        else:
             return 0
+
 
 class Agent:
     def __init__(self, epsilon, action_size=10):
@@ -26,14 +29,30 @@ class Agent:
             return np.random.randint(0, len(self.Qs))
         return np.argmax(self.Qs)
 
-bandit = Bandit()
-Qs = np.zeros(10)
-ns = np.zeros(10)
 
-for n in range(1000):
-    action = np.random.randint(0, 10)
-    reward = bandit.play(action)
+runs = 200
+steps = 1000
+epsilon = 0.3
+all_rates = np.zeros((runs, steps))
 
-    ns[action] += 1
-    Qs[action] += (reward - Qs[action]) / ns[action]
-    print(Qs)
+for run in range(runs):
+    bandit = Bandit()
+    agent = Agent(epsilon)
+    total_reward = 0
+    rates = []
+
+    for step in range(steps):
+        action = agent.get_action()
+        reward = bandit.play(action)
+        agent.update(action, reward)
+        total_reward += reward
+        rates.append(total_reward / (step + 1))
+
+    all_rates[run] = rates
+
+avg_rates = np.average(all_rates, axis=0)
+
+plt.ylabel('Rates')
+plt.xlabel('Steps')
+plt.plot(avg_rates)
+plt.show()
