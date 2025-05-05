@@ -1,6 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+from ch01.non_stationary import AlphaAgent
+
 
 class Bandit:
     def __init__(self, arms=10):
