@@ -9,7 +9,6 @@ import time
 from dezero import Variable
 
 
-# 5x5 Grid World용 one-hot 인코딩
 def one_hot(state):
     HEIGHT, WIDTH = 5, 5
     vec = np.zeros(HEIGHT * WIDTH, dtype=np.float32)
@@ -22,9 +21,9 @@ def one_hot(state):
 class QNet(Model):
     def __init__(self):
         super().__init__()
-        self.l1 = L.Linear(64)  # 은닉층 크기 증가 (기존 10에서 64로)
-        self.l2 = L.Linear(32)  # 중간 은닉층 추가
-        self.l3 = L.Linear(4)  # 출력층 (행동 수)
+        self.l1 = L.Linear(64)
+        self.l2 = L.Linear(32)
+        self.l3 = L.Linear(4)
 
     def forward(self, x):
         x = F.relu(self.l1(x))
@@ -36,11 +35,11 @@ class QNet(Model):
 class QLearningAgent:
     def __init__(self):
         # 하이퍼파라미터 최적화
-        self.gamma = 0.98  # 할인율 증가 (0.9 → 0.98)
-        self.lr = 0.003  # 학습률 조정 (0.01 → 0.003)
-        self.epsilon = 0.5  # 초기 탐험율 증가 (0.1 → 0.5)
-        self.min_epsilon = 0.01  # 최소 탐험율
-        self.decay_rate = 0.995  # 탐험율 감소 계수
+        self.gamma = 0.98
+        self.lr = 0.003
+        self.epsilon = 0.5
+        self.min_epsilon = 0.01
+        self.decay_rate = 0.995
         self.action_size = 4
 
         # 신경망 및 옵티마이저 초기화
@@ -88,7 +87,7 @@ class QLearningAgent:
 # 학습 설정
 env = GridWorld()
 agent = QLearningAgent()
-episodes = 2000  # 에피소드 증가
+episodes = 1000  # 에피소드 증가
 max_steps = 100  # 에피소드당 최대 스텝 수
 print_interval = 100
 
@@ -98,14 +97,6 @@ reward_history = []
 success_history = []
 steps_history = []
 
-print("===== Q-Network 학습 시작 =====")
-print(f"신경망 최적화 파라미터:")
-print(f"  - 은닉층 구조: 64 -> 32 -> 4")
-print(f"  - 학습률: {agent.lr}")
-print(f"  - 할인율: {agent.gamma}")
-print(f"  - 초기 탐험율: {agent.epsilon} (감소 계수: {agent.decay_rate}, 최소값: {agent.min_epsilon})")
-
-# 시간 측정 시작
 start_time = time.time()
 
 try:
@@ -151,18 +142,11 @@ try:
             avg_reward = np.mean(reward_history[-print_interval:])
             avg_steps = np.mean(steps_history[-print_interval:])
 
-            print(f"Episode {episode + 1}/{episodes} [시간: {elapsed:.1f}초]")
-            print(f"  평균 보상: {avg_reward:.2f}, 평균 스텝: {avg_steps:.1f}, 성공률: {avg_success:.2f}")
-            print(f"  현재 탐험율: {agent.epsilon:.4f}")
 
 except KeyboardInterrupt:
     print("\n학습 중단!")
 
-# 총 학습 시간
 total_time = time.time() - start_time
-print(f"\n총 학습 시간: {total_time:.1f}초")
-
-# 학습 결과 시각화
 plt.figure(figsize=(15, 5))
 
 # 1. 손실 그래프
@@ -231,18 +215,6 @@ for y in range(env.height):
             print(f"  {arrows[best_action]}  ", end="")
     print()  # 줄바꿈
 
-# 최적화 파라미터 요약
-print("\n=== 신경망 최적화 파라미터 요약 ===")
-print(f"1. 신경망 구조:")
-print(f"   - 입력층: 25 (5x5 one-hot)")
-print(f"   - 은닉층 1: 64 (ReLU)")
-print(f"   - 은닉층 2: 32 (ReLU)")
-print(f"   - 출력층: 4 (행동)")
-print(f"2. 학습 파라미터:")
-print(f"   - 옵티마이저: Adam(lr={agent.lr})")
-print(f"   - 할인율(gamma): {agent.gamma}")
-print(f"   - 탐험 전략: ε-greedy (초기 {0.5} → 최소 {agent.min_epsilon}, 감소율 {agent.decay_rate})")
-print(f"3. 학습 결과:")
-print(f"   - 에피소드: {episodes}")
-print(f"   - 최종 성공률: {np.mean(success_history[-100:]):.2f}")
-print(f"   - 평균 스텝 수: {np.mean(steps_history[-100:]):.1f}")
+
+
+

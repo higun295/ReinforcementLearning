@@ -33,7 +33,7 @@ class QLearningAgent:
         self.action_size = 4
 
         self.qnet = QNet()
-        self.optimizer = optimizers.SGD(self.lr)
+        self.optimizer = optimizers.Adam(self.lr)
         self.optimizer.setup(self.qnet)
 
     def get_action(self, state_vec):
