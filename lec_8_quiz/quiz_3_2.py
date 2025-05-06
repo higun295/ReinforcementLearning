@@ -4,10 +4,10 @@ from dezero import Model
 from dezero import optimizers
 import dezero.functions as F
 import dezero.layers as L
-from normalGridWorld.gridworld import GridWorld
+from bigGridWorld.gridworld import GridWorld
 
 def one_hot(state):
-    HEIGHT, WIDTH = 3, 4
+    HEIGHT, WIDTH = 5, 5
     vec = np.zeros(HEIGHT * WIDTH, dtype=np.float32)
     y, x = state
     idx = WIDTH * y + x
