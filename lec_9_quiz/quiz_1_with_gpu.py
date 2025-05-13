@@ -1,3 +1,7 @@
+import os
+
+os.environ['KMP_DUPLICATE_LIB_OK'] = 'TRUE'
+
 import copy
 from collections import deque
 import random
@@ -8,7 +12,6 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 import torch.nn.functional as F
-from torch.cuda.amp import autocast, GradScaler
 
 # GPU 사용 가능 여부 확인
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -36,7 +39,7 @@ class ReplayBuffer:
         next_state = np.stack([x[3] for x in data])
         done = np.array([x[4] for x in data]).astype(np.float32)
 
-        # NumPy 배열을 PyTorch 텐서로 변환하고 GPU로 이동
+        # NumPy 배열을 PyTorch 텐서로 변환
         state = torch.FloatTensor(state).to(device)
         action = torch.LongTensor(action).to(device)
         reward = torch.FloatTensor(reward).to(device)
@@ -46,58 +49,94 @@ class ReplayBuffer:
         return state, action, reward, next_state, done
 
 
-class QNet(nn.Module):
+# Dueling DQN 네트워크 구현
+class DuelingQNet(nn.Module):
     def __init__(self, state_size, action_size):
-        super(QNet, self).__init__()
-        self.fc1 = nn.Linear(state_size, 128)
-        self.fc2 = nn.Linear(128, 128)
-        self.fc3 = nn.Linear(128, action_size)
+        super(DuelingQNet, self).__init__()
+
+        # 공통 특성 추출 레이어
+        self.feature_layer = nn.Sequential(
+            nn.Linear(state_size, 256),
+            nn.ReLU(),
+            nn.Linear(256, 256),
+            nn.ReLU()
+        )
+
+        # 가치 스트림 (V)
+        self.value_stream = nn.Sequential(
+            nn.Linear(256, 128),
+            nn.ReLU(),
+            nn.Linear(128, 1)
+        )
+
+        # 장점 스트림 (A)
+        self.advantage_stream = nn.Sequential(
+            nn.Linear(256, 128),
+            nn.ReLU(),
+            nn.Linear(128, action_size)
+        )
 
     def forward(self, x):
-        x = F.relu(self.fc1(x))
-        x = F.relu(self.fc2(x))
-        x = self.fc3(x)
-        return x
+        features = self.feature_layer(x)
+
+        value = self.value_stream(features)
+        advantages = self.advantage_stream(features)
+
+        # Q(s,a) = V(s) + (A(s,a) - 평균(A(s,a')))
+        q_values = value + (advantages - advantages.mean(dim=1, keepdim=True))
+
+        return q_values
 
 
-# 수정된 보상 함수 (학습 가속화를 위한 보상 설계)
-def compute_reward(state, next_state, done):
-    """Mountain Car 환경의 보상 함수를 수정하여 학습 효율성 개선"""
-    original_reward = -1.0  # 원래 보상: 매 단계마다 -1
-
-    # 목표 도달 시 큰 보상
+# 강화된 보상 함수
+def compute_reward(state, next_state, done, action=None):
+    # 목표 도달 시 매우 큰 보상
     if done and next_state[0] >= 0.5:
-        return 100.0
+        return 200.0
 
-    # 높이에 기반한 보상
-    height_reward = next_state[0] + 0.5  # 높이에 비례한 보상 (-0.5 ~ +0.5)
+    # 높이 기반 보상 (더 가파르게)
+    position_reward = (next_state[0] - (-1.2)) / (0.6 - (-1.2))  # -1.2~0.6 범위를 0~1로 정규화
+    height_reward = position_reward * 15  # 높이에 더 큰 가중치
 
-    # 속도에 기반한 보상 (오른쪽으로 빠를수록 좋음)
-    velocity_reward = abs(next_state[1]) * 10 if next_state[1] > 0 else 0
+    # 속도 기반 보상 (방향성 고려)
+    velocity_reward = 0
+    # 산을 오르기 위한 진자 움직임 장려
+    if (next_state[1] > 0 and next_state[0] > -0.5) or (next_state[1] < 0 and next_state[0] < -0.4):
+        velocity_reward = abs(next_state[1]) * 30
 
-    # 최종 보상: 기본 보상 + 높이 보상 + 속도 보상
-    return original_reward + height_reward + velocity_reward
+    # 진전 보상 (이전 위치보다 더 높이 올라갔을 때)
+    progress_reward = 0
+    if next_state[0] > state[0]:
+        progress_reward = (next_state[0] - state[0]) * 50
+
+    # 최종 보상
+    return -1 + height_reward + velocity_reward + progress_reward
 
 
 class DQNAgent:
-    def __init__(self, state_size, action_size):
-        # Mountain Car 환경에 맞게 수정된 하이퍼파라미터
-        self.state_size = state_size
-        self.action_size = action_size
-        self.gamma = 0.99  # 감가율 증가 (장기적 보상 중요성 증가)
-        self.lr = 0.001  # 학습률 증가 (더 빠른 학습)
-        self.epsilon = 0.1  # 탐색 확률
-        self.buffer_size = 10000
-        self.batch_size = 64  # 배치 크기 증가 (GPU 활용도 향상)
+    def __init__(self):
+        # Mountain Car 환경을 위한 설정
+        env = gym.make('MountainCar-v0')
+        self.state_size = env.observation_space.shape[0]
+        self.action_size = env.action_space.n
+        env.close()
 
-        # 네트워크 및 옵티마이저 초기화
-        self.qnet = QNet(state_size, action_size).to(device)
-        self.qnet_target = QNet(state_size, action_size).to(device)
+        # 하이퍼파라미터
+        self.gamma = 0.99  # 감마 유지
+        self.lr = 0.0005  # 더 작은 학습률
+        self.epsilon_start = 1.0  # 초기 입실론
+        self.epsilon_end = 0.01  # 최종 입실론
+        self.epsilon_decay = 0.995  # 입실론 감소율
+        self.epsilon = self.epsilon_start
+        self.buffer_size = 100000  # 버퍼 크기 증가
+        self.batch_size = 64  # 배치 크기 증가
+        self.update_count = 0  # 업데이트 카운터 추적
+
+        # 네트워크 및 옵티마이저
+        self.qnet = DuelingQNet(self.state_size, self.action_size).to(device)
+        self.qnet_target = DuelingQNet(self.state_size, self.action_size).to(device)
         self.optimizer = optim.Adam(self.qnet.parameters(), lr=self.lr)
         self.replay_buffer = ReplayBuffer(self.buffer_size, self.batch_size)
-
-        # GPU 최적화를 위한 mixed precision 설정
-        self.scaler = GradScaler()
 
         # 타깃 네트워크 초기화
         self.sync_qnet()
@@ -120,28 +159,33 @@ class DQNAgent:
         # 배치 데이터 가져오기
         states, actions, rewards, next_states, dones = self.replay_buffer.get_batch()
 
-        # Mixed precision 학습
-        with autocast():
-            # 현재 Q 값 계산
-            q_values = self.qnet(states)
-            q_value = q_values.gather(1, actions.unsqueeze(1)).squeeze(1)
+        # 현재 Q 값 계산
+        q_values = self.qnet(states)
+        q_value = q_values.gather(1, actions.unsqueeze(1)).squeeze(1)
 
-            # 타깃 Q 값 계산 (Double DQN 적용)
-            with torch.no_grad():
-                next_q_values = self.qnet(next_states)
-                best_actions = next_q_values.argmax(1)
-                next_q_values_target = self.qnet_target(next_states)
-                next_q_value = next_q_values_target.gather(1, best_actions.unsqueeze(1)).squeeze(1)
-                target = rewards + (1 - dones) * self.gamma * next_q_value
+        # 타깃 Q 값 계산 (Double DQN)
+        with torch.no_grad():
+            # 행동 선택은 현재 네트워크로
+            best_actions = self.qnet(next_states).argmax(1, keepdim=True)
+            # Q 값 계산은 타깃 네트워크로
+            next_q_values = self.qnet_target(next_states).gather(1, best_actions).squeeze(1)
+            target = rewards + (1 - dones) * self.gamma * next_q_values
 
-            # 손실 계산
-            loss = F.smooth_l1_loss(q_value, target)  # Huber 손실 (안정적인 학습)
+        # Huber Loss 사용 (더 안정적인 학습)
+        loss = F.smooth_l1_loss(q_value, target)
 
-        # 역전파 및 가중치 업데이트 (mixed precision 사용)
+        # 옵티마이저 업데이트
         self.optimizer.zero_grad()
-        self.scaler.scale(loss).backward()
-        self.scaler.step(self.optimizer)
-        self.scaler.update()
+        loss.backward()
+        # 그래디언트 클리핑 (안정적인 학습)
+        torch.nn.utils.clip_grad_norm_(self.qnet.parameters(), 1.0)
+        self.optimizer.step()
+
+        # 입실론 감소
+        self.epsilon = max(self.epsilon_end, self.epsilon * self.epsilon_decay)
+
+        # 업데이트 카운터 증가
+        self.update_count += 1
 
         return loss.item()
 
@@ -149,109 +193,152 @@ class DQNAgent:
         self.qnet_target.load_state_dict(self.qnet.state_dict())
 
 
-# 학습 파라미터 설정
-episodes = 300  # 에피소드 수 감소 (GPU 가속으로 충분)
-sync_interval = 5  # 타깃 네트워크 동기화 주기 단축
-env = gym.make('MountainCar-v0', render_mode='rgb_array')
-state_size = env.observation_space.shape[0]
-action_size = env.action_space.n
+# 학습 결과를 저장하는 함수
+def save_results(reward_history, filename="mountain_car_results"):
+    # 그래프 저장
+    plt.figure(figsize=(12, 6))
+    plt.plot(reward_history)
+    plt.xlabel('에피소드')
+    plt.ylabel('총 보상')
+    plt.title('Mountain Car DQN 학습 곡선')
+    plt.grid(True)
+    plt.savefig(f'{filename}.png')
 
-agent = DQNAgent(state_size, action_size)
-reward_history = []
-episode_lengths = []
+    # 10개 에피소드 단위로 이동 평균 추가
+    window_size = 10
+    avg_rewards = []
+    for i in range(len(reward_history) - window_size + 1):
+        avg_rewards.append(np.mean(reward_history[i:i + window_size]))
+
+    plt.figure(figsize=(12, 6))
+    plt.plot(range(window_size - 1, len(reward_history)), avg_rewards)
+    plt.xlabel('에피소드')
+    plt.ylabel(f'{window_size}개 에피소드 평균 보상')
+    plt.title(f'Mountain Car DQN 이동 평균 (윈도우 크기: {window_size})')
+    plt.grid(True)
+    plt.savefig(f'{filename}_moving_avg.png')
+
+    # 학습 결과 저장
+    import pickle
+    with open(f'{filename}.pkl', 'wb') as f:
+        pickle.dump({
+            'reward_history': reward_history,
+            'avg_rewards': avg_rewards
+        }, f)
 
 
-# 학습 진행률 표시 함수
-def progress_bar(current, total, bar_length=50):
-    percent = current / total
-    arrow = '=' * int(bar_length * percent)
-    spaces = ' ' * (bar_length - len(arrow))
-    print(f"\r[{arrow}{spaces}] {int(percent * 100)}%", end='')
+# 메인 학습 및 테스트 코드
+def main():
+    # 환경 및 에이전트 초기화
+    env = gym.make('MountainCar-v0', render_mode='rgb_array')
+    agent = DQNAgent()
 
+    # 학습 파라미터
+    episodes = 500
+    sync_interval = 5
+    reward_history = []
+    best_reward = -float('inf')
+    best_model_path = 'best_mountain_car_model.pth'
 
-# 에피소드별 학습
-print(f"시작: MountainCar-v0, 에피소드: {episodes}, 장치: {device}")
-for episode in range(episodes):
+    # 경험 버퍼 초기화 (랜덤 데이터로)
+    print("=== 경험 버퍼 초기화 중 ===")
     state = env.reset()[0]
-    done = False
-    total_reward = 0
-    step_count = 0
-    episode_loss = []
-
-    while not done and step_count < 1000:  # 최대 스텝 제한
-        action = agent.get_action(state)
+    for _ in range(1000):  # 1000개의 초기 경험 수집
+        action = np.random.randint(0, agent.action_size)
         next_state, reward, terminated, truncated, info = env.step(action)
-        done = terminated | truncated
+        done = terminated or truncated
+        modified_reward = compute_reward(state, next_state, done, action)
+        agent.replay_buffer.add(state, action, modified_reward, next_state, done)
+        if done:
+            state = env.reset()[0]
+        else:
+            state = next_state
 
-        # 수정된 보상 사용
-        modified_reward = compute_reward(state, next_state, done)
+    # 학습 시작
+    print("=== 학습 시작 ===")
+    for episode in range(episodes):
+        state = env.reset()[0]
+        done = False
+        total_reward = 0
+        step_count = 0
 
-        # 에이전트 업데이트
-        loss = agent.update(state, action, modified_reward, next_state, done)
-        if loss is not None:
-            episode_loss.append(loss)
+        while not done and step_count < 1000:  # 최대 1000 스텝
+            action = agent.get_action(state)
+            next_state, reward, terminated, truncated, info = env.step(action)
+            done = terminated or truncated
 
-        state = next_state
-        total_reward += reward  # 원래 보상으로 기록 (성능 비교용)
-        step_count += 1
+            # 수정된 보상 사용
+            modified_reward = compute_reward(state, next_state, done, action)
 
-    # 타깃 네트워크 동기화
-    if episode % sync_interval == 0:
-        agent.sync_qnet()
+            # 에이전트 업데이트
+            agent.update(state, action, modified_reward, next_state, done)
 
-    # 진행 상황 저장
-    reward_history.append(total_reward)
-    episode_lengths.append(step_count)
+            state = next_state
+            total_reward += reward  # 원래 보상으로 기록
+            step_count += 1
 
-    # 진행 상황 출력
-    progress_bar(episode + 1, episodes)
-    if (episode + 1) % 10 == 0:
-        avg_reward = np.mean(reward_history[-10:])
-        avg_length = np.mean(episode_lengths[-10:])
-        avg_loss = np.mean(episode_loss) if episode_loss else 0
-        print(f"\n에피소드: {episode + 1}/{episodes}, 보상: {total_reward:.2f}, 평균 보상(10): {avg_reward:.2f}, "
-              f"스텝: {step_count}, 평균 스텝(10): {avg_length:.2f}, 평균 손실: {avg_loss:.4f}")
+        # 타깃 네트워크 동기화
+        if episode % sync_interval == 0:
+            agent.sync_qnet()
 
-# 학습 결과 시각화
-plt.figure(figsize=(12, 5))
+        # 진행 상황 기록
+        reward_history.append(total_reward)
 
-plt.subplot(1, 2, 1)
-plt.plot(reward_history)
-plt.xlabel('에피소드')
-plt.ylabel('총 보상')
-plt.title('총 보상 추이')
-plt.grid(True)
+        # 최고 성능 모델 저장
+        if total_reward > best_reward:
+            best_reward = total_reward
+            torch.save(agent.qnet.state_dict(), best_model_path)
+            print(f"새로운 최고 성능 모델 저장! 보상: {best_reward:.2f}")
 
-plt.subplot(1, 2, 2)
-plt.plot(episode_lengths)
-plt.xlabel('에피소드')
-plt.ylabel('에피소드 길이')
-plt.title('에피소드 길이 추이')
-plt.grid(True)
+        # 진행 상황 출력
+        if (episode + 1) % 10 == 0:
+            avg_reward = np.mean(reward_history[-10:])
+            print(
+                f"에피소드: {episode + 1}/{episodes}, 보상: {total_reward:.2f}, 평균 보상(10): {avg_reward:.2f}, 스텝: {step_count}, 입실론: {agent.epsilon:.4f}")
 
-plt.tight_layout()
-plt.savefig('mountain_car_dqn_learning_curve.png')
-plt.show()
+    # 학습 종료
+    env.close()
 
-# 학습된 에이전트 테스트
-print("\n학습된 에이전트 테스트 중...")
-env_test = gym.make('MountainCar-v0', render_mode='human')
-agent.epsilon = 0  # 테스트에서는 탐색 없음 (그리디 정책)
+    # 학습 결과 저장
+    save_results(reward_history)
 
-for test_ep in range(3):  # 3번 테스트
-    state = env_test.reset()[0]
-    done = False
-    total_reward = 0
-    step_count = 0
+    # 학습된 에이전트로 테스트
+    print("\n=== 최종 모델로 테스트 ===")
+    agent.qnet.load_state_dict(torch.load(best_model_path))
+    test_agent(agent)
 
-    while not done and step_count < 1000:
-        action = agent.get_action(state)
-        next_state, reward, terminated, truncated, info = env_test.step(action)
-        done = terminated | truncated
-        state = next_state
-        total_reward += reward
-        step_count += 1
 
-    print(f"테스트 에피소드 {test_ep + 1}/3, 총 보상: {total_reward:.2f}, 스텝: {step_count}")
+def test_agent(agent):
+    print("\n=== 학습된 에이전트 테스트 ===")
+    env = gym.make('MountainCar-v0', render_mode='human')
 
-print("테스트 완료!")
+    # 탐색 없이 테스트
+    agent.epsilon = 0
+
+    for test_ep in range(5):  # 5번 테스트
+        state = env.reset()[0]
+        done = False
+        total_reward = 0
+        step_count = 0
+
+        while not done and step_count < 1000:
+            # 행동 선택
+            action = agent.get_action(state)
+
+            # 환경 진행
+            next_state, reward, terminated, truncated, info = env.step(action)
+            done = terminated or truncated
+
+            # 상태 및 보상 업데이트
+            state = next_state
+            total_reward += reward
+            step_count += 1
+
+        print(f"테스트 {test_ep + 1}/5, 총 보상: {total_reward:.2f}, 스텝: {step_count}")
+
+    env.close()
+    print("테스트 완료!")
+
+
+if __name__ == "__main__":
+    main()
