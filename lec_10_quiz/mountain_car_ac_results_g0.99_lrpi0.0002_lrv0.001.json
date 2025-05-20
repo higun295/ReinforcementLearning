@@ -1,0 +1,10 @@
+{
+    "gamma": 0.99,
+    "lr_pi": 0.0002,
+    "lr_v": 0.001,
+    "use_custom_reset": true,
+    "use_reward_shaping": true,
+    "solved_episode": 536,
+    "final_avg_100": -104.2,
+    "final_eval": -104.7
+}
