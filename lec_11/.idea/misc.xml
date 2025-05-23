@@ -3,5 +3,5 @@
   <component name="Black">
     <option name="sdkName" value="reinforcementlearning_2" />
   </component>
-  <component name="ProjectRootManager" version="2" project-jdk-name="reinforcementlearning_2" project-jdk-type="Python SDK" />
+  <component name="ProjectRootManager" version="2" project-jdk-name="lec_11_racing_gpu" project-jdk-type="Python SDK" />
 </project>

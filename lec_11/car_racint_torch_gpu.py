@@ -1,6 +1,3 @@
-import os
-os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
-
 from collections import deque
 import random
 import matplotlib.pyplot as plt
@@ -10,6 +7,9 @@ import torch
 import torch.optim as optim
 import torch.nn.functional as F
 import torch.nn as nn
+import time
+import imageio
+
 
 class ReplayBuffer:
     def __init__(self, buffer_size, batch_size):
@@ -33,6 +33,7 @@ class ReplayBuffer:
         done = np.array([x[4] for x in data]).astype(np.int32)
         return state, action, reward, next_state, done
 
+
 class CNNFeatureExtractor(nn.Module):
     def __init__(self):
         super().__init__()
@@ -49,6 +50,7 @@ class CNNFeatureExtractor(nn.Module):
         x = F.relu(self.linear(x))
         return x
 
+
 class QNet(nn.Module):
     def __init__(self, action_size):
         super().__init__()
@@ -63,6 +65,7 @@ class QNet(nn.Module):
         x = F.relu(self.l2(x))
         x = self.l3(x)
         return x
+
 
 class DQNAgent:
     def __init__(self, device='cpu'):
@@ -118,17 +121,70 @@ class DQNAgent:
     def sync_qnet(self):
         self.qnet_target.load_state_dict(self.qnet.state_dict())
 
+
 def preprocess(state):
     state = np.transpose(state, (2, 0, 1))
     state = state / 255.0
     return state
 
 
-# GPU 사용 설정 (이 부분만 변경!)
+# 100회 이동평균 계산 함수 추가
+def calculate_moving_average(data, window_size=100):
+    moving_averages = []
+    for i in range(len(data)):
+        if i < window_size - 1:
+            avg = np.mean(data[:i + 1])
+        else:
+            avg = np.mean(data[i - window_size + 1:i + 1])
+        moving_averages.append(avg)
+    return moving_averages
+
+
+# 영상 저장 함수 추가
+def save_gameplay_video(agent, filename="racing_gameplay.mp4", max_frames=1000):
+    env_video = gym.make('CarRacing-v2', continuous=False, render_mode='rgb_array')
+
+    state = env_video.reset()[0]
+    state = preprocess(state)
+    done = False
+    frames = []
+
+    agent.epsilon = 0  # 탐험 끄기
+
+    while not done and len(frames) < max_frames:
+        action = agent.get_action(state)
+        next_state, reward, terminated, truncated, info = env_video.step(action)
+        done = terminated | truncated
+
+        # 프레임 저장
+        frame = env_video.render()
+        frames.append(frame)
+
+        next_state = preprocess(next_state)
+        state = next_state
+
+    # 추가 프레임 (30개)
+    for _ in range(30):
+        if frames:
+            frames.append(frames[-1])
+
+    # 비디오 저장
+    if frames:
+        imageio.mimsave(filename, frames, fps=30)
+        print(f"게임 영상이 {filename}에 저장되었습니다.")
+
+    env_video.close()
+
+
+# GPU 사용 설정
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(f"Using device: {device}")
 
-episodes = 1000
+# 학습 시작 시간 기록
+start_time = time.time()
+print("학습을 시작합니다...")
+
+episodes = 10
 sync_interval = 10
 
 env = gym.make('CarRacing-v2', continuous=False, render_mode='rgb_array')
@@ -158,11 +214,59 @@ for episode in range(episodes):
     if episode % 10 == 0:
         print("episode : {}, total reward : {}".format(episode, total_reward))
 
+# 학습 완료 시간 기록 및 출력
+end_time = time.time()
+training_time = end_time - start_time
+hours = int(training_time // 3600)
+minutes = int((training_time % 3600) // 60)
+seconds = int(training_time % 60)
+print(f"학습 완료! 총 학습 시간: {hours}시간 {minutes}분 {seconds}초")
+
+# 100회 이동평균 계산
+moving_avg_100 = calculate_moving_average(reward_history, 100)
+
+# 그래프 저장 (에피소드별 보상 + 100회 평균)
+plt.figure(figsize=(12, 8))
+
+# 에피소드별 보상 그래프
+plt.subplot(2, 1, 1)
+plt.plot(range(len(reward_history)), reward_history, alpha=0.7, color='blue', linewidth=0.8)
 plt.xlabel('Episode')
 plt.ylabel('Total Reward')
-plt.plot(range(len(reward_history)), reward_history)
+plt.title('Episode Rewards')
+plt.grid(True)
+
+# 100회 이동평균 그래프
+plt.subplot(2, 1, 2)
+plt.plot(range(len(moving_avg_100)), moving_avg_100, color='red', linewidth=2)
+plt.xlabel('Episode')
+plt.ylabel('100-Episode Moving Average')
+plt.title('100-Episode Moving Average Rewards')
+plt.grid(True)
+
+plt.tight_layout()
+plt.savefig('training_results.png', dpi=300, bbox_inches='tight')
 plt.show()
 
+# 결합된 그래프도 저장
+plt.figure(figsize=(10, 6))
+plt.plot(range(len(reward_history)), reward_history, alpha=0.5, color='blue', linewidth=0.8, label='Episode Reward')
+plt.plot(range(len(moving_avg_100)), moving_avg_100, color='red', linewidth=2, label='100-Episode Moving Average')
+plt.xlabel('Episode')
+plt.ylabel('Total Reward')
+plt.title('CarRacing DQN Training Results')
+plt.legend()
+plt.grid(True)
+plt.savefig('combined_training_results.png', dpi=300, bbox_inches='tight')
+plt.show()
+
+print("그래프가 저장되었습니다: training_results.png, combined_training_results.png")
+
+# 게임 영상 저장
+print("게임 플레이 영상을 생성 중...")
+save_gameplay_video(agent, "racing_gameplay.mp4")
+
+# 원래 코드의 마지막 부분 (사람이 보는 화면)
 env2 = gym.make('CarRacing-v2', continuous=False, render_mode='human')
 
 agent.epsilon = 0
