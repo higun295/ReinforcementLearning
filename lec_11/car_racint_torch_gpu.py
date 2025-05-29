@@ -142,38 +142,54 @@ def calculate_moving_average(data, window_size=100):
 
 # 영상 저장 함수 추가
 def save_gameplay_video(agent, filename="racing_gameplay.mp4", max_frames=1000):
+    """학습된 에이전트의 게임플레이를 비디오로 기록"""
+    # 비디오 기록용 환경 생성
     env_video = gym.make('CarRacing-v2', continuous=False, render_mode='rgb_array')
 
     state = env_video.reset()[0]
     state = preprocess(state)
     done = False
     frames = []
+    total_reward = 0
+    steps = 0
 
     agent.epsilon = 0  # 탐험 끄기
 
-    while not done and len(frames) < max_frames:
+    while not done and steps < max_frames:
+        # 행동 선택 (학습된 정책 사용)
         action = agent.get_action(state)
+
+        # 환경에서 행동 실행
         next_state, reward, terminated, truncated, info = env_video.step(action)
         done = terminated | truncated
 
-        # 프레임 저장
-        frame = env_video.render()
-        frames.append(frame)
-
+        # 결과 기록
+        frames.append(env_video.render())
+        total_reward += reward
         next_state = preprocess(next_state)
         state = next_state
+        steps += 1
 
-    # 추가 프레임 (30개)
+    # 마지막 프레임 30개 더 추가 (자연스러운 종료)
     for _ in range(30):
-        if frames:
-            frames.append(frames[-1])
+        frames.append(env_video.render())
 
     # 비디오 저장
-    if frames:
+    try:
         imageio.mimsave(filename, frames, fps=30)
-        print(f"게임 영상이 {filename}에 저장되었습니다.")
+        print(f"게임 영상이 {filename}에 저장되었습니다. Steps: {steps}, Total reward: {total_reward:.2f}")
+    except Exception as e:
+        print(f"비디오 저장 실패: {e}")
+        # GIF로 대체 시도
+        try:
+            gif_filename = filename.replace('.mp4', '.gif')
+            imageio.mimsave(gif_filename, frames, fps=30)
+            print(f"GIF로 저장되었습니다: {gif_filename}")
+        except Exception as e2:
+            print(f"GIF 저장도 실패: {e2}")
 
     env_video.close()
+    return total_reward, steps
 
 
 # GPU 사용 설정
@@ -184,7 +200,7 @@ print(f"Using device: {device}")
 start_time = time.time()
 print("학습을 시작합니다...")
 
-episodes = 10
+episodes = 1000
 sync_interval = 10
 
 env = gym.make('CarRacing-v2', continuous=False, render_mode='rgb_array')
