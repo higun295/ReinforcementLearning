@@ -1,0 +1,3 @@
+
+  0%|                                                                                         | 0/2000 [00:01<?, ?it/s]
+[✖] aggressive 테스트 중 오류 발생: `x` and `y` must have the same dtype, got tf.float32 != tf.float64.

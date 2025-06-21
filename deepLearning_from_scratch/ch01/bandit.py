@@ -1,8 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-from ch01.non_stationary import AlphaAgent
-
 
 class Bandit:
     def __init__(self, arms=10):
@@ -32,15 +30,14 @@ class Agent:
         return np.argmax(self.Qs)
 
 
-runs = 200
-steps = 1000
-epsilon = 0.3
-all_rates = np.zeros((runs, steps))
+if __name__ == '__main__':
+    steps = 1000
+    epsilon = 0.1
 
-for run in range(runs):
     bandit = Bandit()
     agent = Agent(epsilon)
     total_reward = 0
+    total_rewards = []
     rates = []
 
     for step in range(steps):
@@ -48,13 +45,18 @@ for run in range(runs):
         reward = bandit.play(action)
         agent.update(action, reward)
         total_reward += reward
+
+        total_rewards.append(total_reward)
         rates.append(total_reward / (step + 1))
 
-    all_rates[run] = rates
+    print(total_reward)
 
-avg_rates = np.average(all_rates, axis=0)
+    plt.ylabel('Total reward')
+    plt.xlabel('Steps')
+    plt.plot(total_rewards)
+    plt.show()
 
-plt.ylabel('Rates')
-plt.xlabel('Steps')
-plt.plot(avg_rates)
-plt.show()
+    plt.ylabel('Rates')
+    plt.xlabel('Steps')
+    plt.plot(rates)
+    plt.show()

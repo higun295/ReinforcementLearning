@@ -1,0 +1,53 @@
+{
+    "os": "Windows-10-10.0.26100-SP0",
+    "python": "3.9.22",
+    "heartbeatAt": "2025-06-02T22:46:36.526028",
+    "startedAt": "2025-06-02T22:46:35.438527",
+    "docker": null,
+    "cuda": null,
+    "args": [],
+    "state": "running",
+    "program": "D:\\Projects\\Python\\ReinforcementLearning\\project_2_a2c\\pongGame_A2C\\hyperparameter_test.py",
+    "codePathLocal": "hyperparameter_test.py",
+    "codePath": "project_2_a2c\\pongGame_A2C\\hyperparameter_test.py",
+    "git": {
+        "remote": "https://github.com/higun295/ReinforcementLearning.git",
+        "commit": "87666669cc6580daf4fe5811f4bc7eec3bb7e61e"
+    },
+    "email": "higun295@gmail.com",
+    "root": "D:/Projects/Python/ReinforcementLearning",
+    "host": "COMAVLER-LAPTOP",
+    "username": "HEEKWON",
+    "executable": "C:\\Users\\HEEKWON\\anaconda3\\envs\\rl_a2c\\python.exe",
+    "cpu_count": 24,
+    "cpu_count_logical": 32,
+    "cpu_freq": {
+        "current": 1466.0,
+        "min": 0.0,
+        "max": 2200.0
+    },
+    "cpu_freq_per_core": [
+        {
+            "current": 1466.0,
+            "min": 0.0,
+            "max": 2200.0
+        }
+    ],
+    "disk": {
+        "/": {
+            "total": 930.8574180603027,
+            "used": 162.25937271118164
+        }
+    },
+    "gpu": "NVIDIA GeForce RTX 4070 Laptop GPU",
+    "gpu_count": 1,
+    "gpu_devices": [
+        {
+            "name": "NVIDIA GeForce RTX 4070 Laptop GPU",
+            "memory_total": 8585740288
+        }
+    ],
+    "memory": {
+        "total": 31.73033905029297
+    }
+}

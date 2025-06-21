@@ -1,0 +1,104 @@
+WARNING:tensorflow:From C:\Users\HEEKWON\anaconda3\envs\reinforcementLearningProject_2\lib\site-packages\keras\src\backend.py:873: The name tf.get_default_graph is deprecated. Please use tf.compat.v1.get_default_graph instead.
+Model: "sequential"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #
+=================================================================
+ conv2d (Conv2D)             (None, 20, 20, 32)        8224
+
+ conv2d_1 (Conv2D)           (None, 9, 9, 64)          32832
+
+ conv2d_2 (Conv2D)           (None, 7, 7, 64)          36928
+
+ flatten (Flatten)           (None, 3136)              0
+
+ dense (Dense)               (None, 512)               1606144
+
+ dense_1 (Dense)             (None, 3)                 1539
+
+=================================================================
+Total params: 1685667 (6.43 MB)
+Trainable params: 1685667 (6.43 MB)
+Non-trainable params: 0 (0.00 Byte)
+_________________________________________________________________
+
+Agent Initialized
+
+기존 가중치 로드 완료!
+1/1 [==============================] - 0s 64ms/step
+1/1 [==============================] - 0s 14ms/step
+1/1 [==============================] - 0s 14ms/step
+1/1 [==============================] - 0s 14ms/step
+1/1 [==============================] - 0s 14ms/step
+1/1 [==============================] - 0s 15ms/step
+1/1 [==============================] - 0s 14ms/step
+1/1 [==============================] - 0s 14ms/step
+1/1 [==============================] - 0s 13ms/step
+1/1 [==============================] - 0s 14ms/step
+1/1 [==============================] - 0s 13ms/step
+1/1 [==============================] - 0s 14ms/step
+1/1 [==============================] - 0s 14ms/step
+1/1 [==============================] - 0s 13ms/step
+1/1 [==============================] - 0s 14ms/step
+1/1 [==============================] - 0s 13ms/step
+1/1 [==============================] - 0s 15ms/step
+1/1 [==============================] - 0s 14ms/step
+1/1 [==============================] - 0s 14ms/step
+1/1 [==============================] - 0s 15ms/step
+1/1 [==============================] - 0s 14ms/step
+1/1 [==============================] - 0s 14ms/step
+1/1 [==============================] - 0s 13ms/step
+1/1 [==============================] - 0s 17ms/step
+1/1 [==============================] - 0s 13ms/step
+
+Traceback (most recent call last):
+  File "D:\Projects\Python\ReinforcementLearning\project_2\pongGame\main.py", line 61, in <module>
+    score = environment.play_episode(name, env, agent, debug=False)
+  File "D:\Projects\Python\ReinforcementLearning\project_2\pongGame\environment.py", line 72, in play_episode
+    score,done = take_step(name,env,agent,score, debug)
+  File "D:\Projects\Python\ReinforcementLearning\project_2\pongGame\environment.py", line 47, in take_step
+    next_action = agent.get_action(new_state)
+  File "D:\Projects\Python\ReinforcementLearning\project_2\pongGame\the_agent.py", line 50, in get_action
+    a_index = np.argmax(self.model.predict(state))
+  File "C:\Users\HEEKWON\anaconda3\envs\reinforcementLearningProject_2\lib\site-packages\keras\src\utils\traceback_utils.py", line 65, in error_handler
+    return fn(*args, **kwargs)
+  File "C:\Users\HEEKWON\anaconda3\envs\reinforcementLearningProject_2\lib\site-packages\keras\src\engine\training.py", line 2620, in predict
+    data_handler = data_adapter.get_data_handler(
+  File "C:\Users\HEEKWON\anaconda3\envs\reinforcementLearningProject_2\lib\site-packages\keras\src\engine\data_adapter.py", line 1688, in get_data_handler
+    return DataHandler(*args, **kwargs)
+  File "C:\Users\HEEKWON\anaconda3\envs\reinforcementLearningProject_2\lib\site-packages\keras\src\engine\data_adapter.py", line 1292, in __init__
+    self._adapter = adapter_cls(
+  File "C:\Users\HEEKWON\anaconda3\envs\reinforcementLearningProject_2\lib\site-packages\keras\src\engine\data_adapter.py", line 355, in __init__
+    dataset = self.slice_inputs(indices_dataset, inputs)
+  File "C:\Users\HEEKWON\anaconda3\envs\reinforcementLearningProject_2\lib\site-packages\keras\src\engine\data_adapter.py", line 396, in slice_inputs
+    dataset = dataset.map(grab_batch, num_parallel_calls=tf.data.AUTOTUNE)
+  File "C:\Users\HEEKWON\anaconda3\envs\reinforcementLearningProject_2\lib\site-packages\tensorflow\python\data\ops\dataset_ops.py", line 2280, in map
+    return map_op._map_v2(
+  File "C:\Users\HEEKWON\anaconda3\envs\reinforcementLearningProject_2\lib\site-packages\tensorflow\python\data\ops\map_op.py", line 40, in _map_v2
+    return _ParallelMapDataset(
+  File "C:\Users\HEEKWON\anaconda3\envs\reinforcementLearningProject_2\lib\site-packages\tensorflow\python\data\ops\map_op.py", line 148, in __init__
+    self._map_func = structured_function.StructuredFunctionWrapper(
+  File "C:\Users\HEEKWON\anaconda3\envs\reinforcementLearningProject_2\lib\site-packages\tensorflow\python\data\ops\structured_function.py", line 265, in __init__
+    self._function = fn_factory()
+  File "C:\Users\HEEKWON\anaconda3\envs\reinforcementLearningProject_2\lib\site-packages\tensorflow\python\eager\polymorphic_function\polymorphic_function.py", line 1227, in get_concrete_function
+    concrete = self._get_concrete_function_garbage_collected(*args, **kwargs)
+  File "C:\Users\HEEKWON\anaconda3\envs\reinforcementLearningProject_2\lib\site-packages\tensorflow\python\eager\polymorphic_function\polymorphic_function.py", line 1197, in _get_concrete_function_garbage_collected
+    self._initialize(args, kwargs, add_initializers_to=initializers)
+  File "C:\Users\HEEKWON\anaconda3\envs\reinforcementLearningProject_2\lib\site-packages\tensorflow\python\eager\polymorphic_function\polymorphic_function.py", line 695, in _initialize
+    self._concrete_variable_creation_fn = tracing_compilation.trace_function(
+  File "C:\Users\HEEKWON\anaconda3\envs\reinforcementLearningProject_2\lib\site-packages\tensorflow\python\eager\polymorphic_function\tracing_compilation.py", line 178, in trace_function
+    concrete_function = _maybe_define_function(
+  File "C:\Users\HEEKWON\anaconda3\envs\reinforcementLearningProject_2\lib\site-packages\tensorflow\python\eager\polymorphic_function\tracing_compilation.py", line 283, in _maybe_define_function
+    concrete_function = _create_concrete_function(
+  File "C:\Users\HEEKWON\anaconda3\envs\reinforcementLearningProject_2\lib\site-packages\tensorflow\python\eager\polymorphic_function\tracing_compilation.py", line 302, in _create_concrete_function
+    with func_graph.as_default():
+  File "C:\Users\HEEKWON\anaconda3\envs\reinforcementLearningProject_2\lib\contextlib.py", line 135, in __enter__
+    return next(self.gen)
+  File "C:\Users\HEEKWON\anaconda3\envs\reinforcementLearningProject_2\lib\site-packages\tensorflow\python\framework\func_graph.py", line 487, in inner_cm
+    with outer_cm as g:
+  File "C:\Users\HEEKWON\anaconda3\envs\reinforcementLearningProject_2\lib\contextlib.py", line 135, in __enter__
+    return next(self.gen)
+  File "C:\Users\HEEKWON\anaconda3\envs\reinforcementLearningProject_2\lib\site-packages\tensorflow\python\framework\ops.py", line 4573, in get_controller
+    with super(_DefaultGraphStack,
+  File "C:\Users\HEEKWON\anaconda3\envs\reinforcementLearningProject_2\lib\contextlib.py", line 135, in __enter__
+    return next(self.gen)
+KeyboardInterrupt

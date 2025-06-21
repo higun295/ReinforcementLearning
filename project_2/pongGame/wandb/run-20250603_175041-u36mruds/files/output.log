@@ -1,0 +1,142 @@
+WARNING:tensorflow:From C:\Users\HEEKWON\anaconda3\envs\reinforcementLearningProject_2\lib\site-packages\keras\src\backend.py:873: The name tf.get_default_graph is deprecated. Please use tf.compat.v1.get_default_graph instead.
+Model: "sequential"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #
+=================================================================
+ conv2d (Conv2D)             (None, 20, 20, 32)        8224
+
+ conv2d_1 (Conv2D)           (None, 9, 9, 64)          32832
+
+ conv2d_2 (Conv2D)           (None, 7, 7, 64)          36928
+
+ flatten (Flatten)           (None, 3136)              0
+
+ dense (Dense)               (None, 512)               1606144
+
+ dense_1 (Dense)             (None, 3)                 1539
+
+=================================================================
+Total params: 1685667 (6.43 MB)
+Trainable params: 1685667 (6.43 MB)
+Non-trainable params: 0 (0.00 Byte)
+_________________________________________________________________
+
+Agent Initialized
+
+기존 가중치 로드 완료!
+
+=== Episode: 0 ===
+Score: -13.0 | Max: -13.0 | Avg(100): -13.00
+Steps: 6470 | Duration: 212.95s
+Epsilon: 0.1000 | Learns: 0
+Q-values: μ=0.127, σ=0.002
+Actions: 0=2119, 2=1886, 3=2465
+Rewards: +8, -21, Σ=-13.0
+
+Weights saved!
+
+=== Episode: 1 ===
+Score: -10.0 | Max: -10.0 | Avg(100): -11.50
+Steps: 7003 | Duration: 236.06s
+Epsilon: 0.1000 | Learns: 0
+Q-values: μ=0.140, σ=0.004
+Actions: 0=2214, 2=2094, 3=2695
+Rewards: +11, -21, Σ=-10.0
+
+Weights saved!
+
+=== Episode: 2 ===
+Score: -14.0 | Max: -10.0 | Avg(100): -12.33
+Steps: 6568 | Duration: 220.01s
+Epsilon: 0.1000 | Learns: 0
+Q-values: μ=0.151, σ=0.001
+Actions: 0=2133, 2=1999, 3=2436
+Rewards: +7, -21, Σ=-14.0
+
+=== Episode: 3 ===
+Score: -12.0 | Max: -10.0 | Avg(100): -12.25
+Steps: 8142 | Duration: 265.08s
+Epsilon: 0.1000 | Learns: 0
+Q-values: μ=0.147, σ=0.001
+Actions: 0=2648, 2=2446, 3=3048
+Rewards: +9, -21, Σ=-12.0
+
+Weights saved!
+
+=== Episode: 4 ===
+Score: -15.0 | Max: -10.0 | Avg(100): -12.80
+Steps: 6278 | Duration: 199.62s
+Epsilon: 0.1000 | Learns: 0
+Q-values: μ=0.121, σ=0.001
+Actions: 0=2074, 2=1849, 3=2355
+Rewards: +6, -21, Σ=-15.0
+
+Weights saved!
+
+=== Episode: 5 ===
+Score: -3.0 | Max: -3.0 | Avg(100): -11.17
+Steps: 9543 | Duration: 325.28s
+Epsilon: 0.1000 | Learns: 0
+Q-values: μ=0.132, σ=0.003
+Actions: 0=3051, 2=2789, 3=3703
+Rewards: +18, -21, Σ=-3.0
+
+WARNING:tensorflow:From C:\Users\HEEKWON\anaconda3\envs\reinforcementLearningProject_2\lib\site-packages\keras\src\utils\tf_utils.py:492: The name tf.ragged.RaggedTensorValue is deprecated. Please use tf.compat.v1.ragged.RaggedTensorValue instead.
+
+WARNING:tensorflow:From C:\Users\HEEKWON\anaconda3\envs\reinforcementLearningProject_2\lib\site-packages\keras\src\utils\tf_utils.py:492: The name tf.ragged.RaggedTensorValue is deprecated. Please use tf.compat.v1.ragged.RaggedTensorValue instead.
+
+Weights saved!
+
+=== Episode: 6 ===
+Score: -10.0 | Max: -3.0 | Avg(100): -11.00
+Steps: 7497 | Duration: 444.87s
+Epsilon: 0.0863 | Learns: 1521
+Q-values: μ=0.133, σ=0.007
+Actions: 0=2288, 2=2177, 3=3032
+Rewards: +11, -21, Σ=-10.0
+
+Traceback (most recent call last):
+  File "D:\Projects\Python\ReinforcementLearning\project_2\pongGame\main.py", line 81, in <module>
+    score = environment.play_episode(name, env, agent, debug=False)
+  File "D:\Projects\Python\ReinforcementLearning\project_2\pongGame\environment.py", line 72, in play_episode
+    score,done = take_step(name,env,agent,score, debug)
+  File "D:\Projects\Python\ReinforcementLearning\project_2\pongGame\environment.py", line 63, in take_step
+    agent.learn(debug)
+  File "D:\Projects\Python\ReinforcementLearning\project_2\pongGame\the_agent.py", line 94, in learn
+    labels = self.model.predict(np.array(states), verbose=0)
+  File "C:\Users\HEEKWON\anaconda3\envs\reinforcementLearningProject_2\lib\site-packages\keras\src\utils\traceback_utils.py", line 65, in error_handler
+    return fn(*args, **kwargs)
+  File "C:\Users\HEEKWON\anaconda3\envs\reinforcementLearningProject_2\lib\site-packages\keras\src\engine\training.py", line 2655, in predict
+    tmp_batch_outputs = self.predict_function(iterator)
+  File "C:\Users\HEEKWON\anaconda3\envs\reinforcementLearningProject_2\lib\site-packages\tensorflow\python\util\traceback_utils.py", line 150, in error_handler
+    return fn(*args, **kwargs)
+  File "C:\Users\HEEKWON\anaconda3\envs\reinforcementLearningProject_2\lib\site-packages\tensorflow\python\eager\polymorphic_function\polymorphic_function.py", line 832, in __call__
+    result = self._call(*args, **kwds)
+  File "C:\Users\HEEKWON\anaconda3\envs\reinforcementLearningProject_2\lib\site-packages\tensorflow\python\eager\polymorphic_function\polymorphic_function.py", line 877, in _call
+    results = tracing_compilation.call_function(
+  File "C:\Users\HEEKWON\anaconda3\envs\reinforcementLearningProject_2\lib\site-packages\tensorflow\python\eager\polymorphic_function\tracing_compilation.py", line 139, in call_function
+    return function._call_flat(  # pylint: disable=protected-access
+  File "C:\Users\HEEKWON\anaconda3\envs\reinforcementLearningProject_2\lib\site-packages\tensorflow\python\eager\polymorphic_function\concrete_function.py", line 1323, in _call_flat
+    return self._inference_function.call_preflattened(args)
+  File "C:\Users\HEEKWON\anaconda3\envs\reinforcementLearningProject_2\lib\site-packages\tensorflow\python\eager\polymorphic_function\atomic_function.py", line 216, in call_preflattened
+    flat_outputs = self.call_flat(*args)
+  File "C:\Users\HEEKWON\anaconda3\envs\reinforcementLearningProject_2\lib\site-packages\tensorflow\python\eager\polymorphic_function\atomic_function.py", line 251, in call_flat
+    outputs = self._bound_context.call_function(
+  File "C:\Users\HEEKWON\anaconda3\envs\reinforcementLearningProject_2\lib\site-packages\tensorflow\python\eager\context.py", line 1486, in call_function
+    outputs = execute.execute(
+  File "C:\Users\HEEKWON\anaconda3\envs\reinforcementLearningProject_2\lib\site-packages\tensorflow\python\eager\execute.py", line 53, in quick_execute
+    tensors = pywrap_tfe.TFE_Py_Execute(ctx._handle, device_name, op_name,
+KeyboardInterrupt
+Exception ignored in atexit callback: <function _start_and_connect_service.<locals>.teardown_atexit at 0x000001CBA69ED750>
+Traceback (most recent call last):
+  File "C:\Users\HEEKWON\anaconda3\envs\reinforcementLearningProject_2\lib\site-packages\wandb\sdk\lib\service_connection.py", line 94, in teardown_atexit
+    conn.teardown(hooks.exit_code)
+  File "C:\Users\HEEKWON\anaconda3\envs\reinforcementLearningProject_2\lib\site-packages\wandb\sdk\lib\service_connection.py", line 226, in teardown
+    self._router.join()
+  File "C:\Users\HEEKWON\anaconda3\envs\reinforcementLearningProject_2\lib\site-packages\wandb\sdk\interface\router.py", line 75, in join
+    self._thread.join()
+  File "C:\Users\HEEKWON\anaconda3\envs\reinforcementLearningProject_2\lib\threading.py", line 1096, in join
+    self._wait_for_tstate_lock()
+  File "C:\Users\HEEKWON\anaconda3\envs\reinforcementLearningProject_2\lib\threading.py", line 1116, in _wait_for_tstate_lock
+    if lock.acquire(block, timeout):
+KeyboardInterrupt:

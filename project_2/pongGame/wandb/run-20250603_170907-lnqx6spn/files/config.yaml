@@ -1,0 +1,54 @@
+_wandb:
+    value:
+        cli_version: 0.19.11
+        m: []
+        python_version: 3.10.17
+        t:
+            "1":
+                - 2
+                - 3
+                - 55
+            "2":
+                - 2
+                - 3
+                - 55
+            "3":
+                - 16
+                - 23
+                - 55
+            "4": 3.10.17
+            "5": 0.19.11
+            "8":
+                - 3
+                - 5
+            "12": 0.19.11
+            "13": windows-amd64
+batch_size:
+    value: 32
+episodes:
+    value: 200
+epsilon_decay:
+    value: 9e-06
+epsilon_min:
+    value: 0.05
+game:
+    value: ALE/Pong-v5
+gamma:
+    value: 0.95
+learn_rate:
+    value: 0.00025
+max_mem_len:
+    value: 750000
+possible_actions:
+    value:
+        - 0
+        - 2
+        - 3
+save_freq:
+    value: 50000
+starting_epsilon:
+    value: 0.1
+starting_mem_len:
+    value: 50000
+target_update_freq:
+    value: 10000

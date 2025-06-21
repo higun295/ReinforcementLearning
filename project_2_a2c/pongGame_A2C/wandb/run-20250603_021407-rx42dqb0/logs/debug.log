@@ -1,0 +1,35 @@
+2025-06-03 02:14:07,055 INFO    MainThread:12884 [wandb_setup.py:_flush():76] Current SDK version is 0.16.6
+2025-06-03 02:14:07,055 INFO    MainThread:12884 [wandb_setup.py:_flush():76] Configure stats pid to 12884
+2025-06-03 02:14:07,055 INFO    MainThread:12884 [wandb_setup.py:_flush():76] Loading settings from C:\Users\HEEKWON\.config\wandb\settings
+2025-06-03 02:14:07,056 INFO    MainThread:12884 [wandb_setup.py:_flush():76] Loading settings from D:\Projects\Python\ReinforcementLearning\project_2_a2c\pongGame_A2C\wandb\settings
+2025-06-03 02:14:07,056 INFO    MainThread:12884 [wandb_setup.py:_flush():76] Loading settings from environment variables: {}
+2025-06-03 02:14:07,056 INFO    MainThread:12884 [wandb_setup.py:_flush():76] Applying setup settings: {'_disable_service': False}
+2025-06-03 02:14:07,056 INFO    MainThread:12884 [wandb_setup.py:_flush():76] Inferring run settings from compute environment: {'program_relpath': 'project_2_a2c\\pongGame_A2C\\hyperparameter_test.py', 'program_abspath': 'D:\\Projects\\Python\\ReinforcementLearning\\project_2_a2c\\pongGame_A2C\\hyperparameter_test.py', 'program': 'D:\\Projects\\Python\\ReinforcementLearning\\project_2_a2c\\pongGame_A2C\\hyperparameter_test.py'}
+2025-06-03 02:14:07,056 INFO    MainThread:12884 [wandb_setup.py:_flush():76] Applying login settings: {}
+2025-06-03 02:14:07,056 INFO    MainThread:12884 [wandb_init.py:_log_setup():521] Logging user logs to D:\Projects\Python\ReinforcementLearning\project_2_a2c\pongGame_A2C\wandb\run-20250603_021407-rx42dqb0\logs\debug.log
+2025-06-03 02:14:07,057 INFO    MainThread:12884 [wandb_init.py:_log_setup():522] Logging internal logs to D:\Projects\Python\ReinforcementLearning\project_2_a2c\pongGame_A2C\wandb\run-20250603_021407-rx42dqb0\logs\debug-internal.log
+2025-06-03 02:14:07,057 INFO    MainThread:12884 [wandb_init.py:init():561] calling init triggers
+2025-06-03 02:14:07,057 INFO    MainThread:12884 [wandb_init.py:init():568] wandb.init called with sweep_config: {}
+config: {'input_shape': (84, 84, 4), 'batch_size': 64, 'n_updates': 2000, 'hidden': 512, 'learning_rate': 0.0005, 'gamma': 0.99, 'value_c': 0.5, 'entropy_c': 0.005, 'clip_ratio': 0.2, 'std_adv': True, 'agent': 'PPO', 'operating_system': 'nt', 'test_name': 'aggressive'}
+2025-06-03 02:14:07,057 INFO    MainThread:12884 [wandb_init.py:init():611] starting backend
+2025-06-03 02:14:07,057 INFO    MainThread:12884 [wandb_init.py:init():615] setting up manager
+2025-06-03 02:14:07,059 INFO    MainThread:12884 [backend.py:_multiprocessing_setup():105] multiprocessing start_methods=spawn, using: spawn
+2025-06-03 02:14:07,060 INFO    MainThread:12884 [wandb_init.py:init():623] backend started and connected
+2025-06-03 02:14:07,064 INFO    MainThread:12884 [wandb_init.py:init():715] updated telemetry
+2025-06-03 02:14:07,116 INFO    MainThread:12884 [wandb_init.py:init():748] communicating run to backend with 90.0 second timeout
+2025-06-03 02:14:07,864 INFO    MainThread:12884 [wandb_run.py:_on_init():2357] communicating current version
+2025-06-03 02:14:07,958 INFO    MainThread:12884 [wandb_run.py:_on_init():2366] got version response upgrade_message: "wandb version 0.19.11 is available!  To upgrade, please run:\n $ pip install wandb --upgrade"
+
+2025-06-03 02:14:07,958 INFO    MainThread:12884 [wandb_init.py:init():799] starting run threads in backend
+2025-06-03 02:14:08,652 INFO    MainThread:12884 [wandb_run.py:_console_start():2335] atexit reg
+2025-06-03 02:14:08,652 INFO    MainThread:12884 [wandb_run.py:_redirect():2190] redirect: wrap_raw
+2025-06-03 02:14:08,652 INFO    MainThread:12884 [wandb_run.py:_redirect():2255] Wrapping output streams.
+2025-06-03 02:14:08,652 INFO    MainThread:12884 [wandb_run.py:_redirect():2280] Redirects installed.
+2025-06-03 02:14:08,653 INFO    MainThread:12884 [wandb_init.py:init():842] run started, returning control to user process
+2025-06-03 02:28:33,703 INFO    MainThread:12884 [wandb_run.py:_finish():2064] finishing run comavler-chungbuk-university/tensorflow2_pong_ppo_test/rx42dqb0
+2025-06-03 02:28:33,704 INFO    MainThread:12884 [wandb_run.py:_atexit_cleanup():2304] got exitcode: 0
+2025-06-03 02:28:33,704 INFO    MainThread:12884 [wandb_run.py:_restore():2287] restore
+2025-06-03 02:28:33,704 INFO    MainThread:12884 [wandb_run.py:_restore():2293] restore done
+2025-06-03 02:28:42,467 INFO    MainThread:12884 [wandb_run.py:_footer_history_summary_info():3936] rendering history
+2025-06-03 02:28:42,470 INFO    MainThread:12884 [wandb_run.py:_footer_history_summary_info():3968] rendering summary
+2025-06-03 02:28:42,489 INFO    MainThread:12884 [wandb_run.py:_footer_sync_info():3895] logging synced files

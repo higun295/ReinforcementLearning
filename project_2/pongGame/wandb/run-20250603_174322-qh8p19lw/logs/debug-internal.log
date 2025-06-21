@@ -1,0 +1,15 @@
+{"time":"2025-06-03T17:43:22.5485859+09:00","level":"INFO","msg":"stream: starting","core version":"0.19.11","symlink path":"D:\\Projects\\Python\\ReinforcementLearning\\project_2\\pongGame\\wandb\\run-20250603_174322-qh8p19lw\\logs\\debug-core.log"}
+{"time":"2025-06-03T17:43:23.0449488+09:00","level":"INFO","msg":"created new stream","id":"qh8p19lw"}
+{"time":"2025-06-03T17:43:23.0449488+09:00","level":"INFO","msg":"stream: started","id":"qh8p19lw"}
+{"time":"2025-06-03T17:43:23.0449488+09:00","level":"INFO","msg":"writer: Do: started","stream_id":"qh8p19lw"}
+{"time":"2025-06-03T17:43:23.0449488+09:00","level":"INFO","msg":"sender: started","stream_id":"qh8p19lw"}
+{"time":"2025-06-03T17:43:23.0449488+09:00","level":"INFO","msg":"handler: started","stream_id":"qh8p19lw"}
+{"time":"2025-06-03T17:43:23.4117863+09:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-06-03T17:43:24.8146195+09:00","level":"INFO","msg":"stream: closing","id":"qh8p19lw"}
+{"time":"2025-06-03T17:43:24.8146195+09:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-06-03T17:43:24.8146195+09:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-06-03T17:43:26.0200667+09:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-06-03T17:43:26.429628+09:00","level":"INFO","msg":"handler: closed","stream_id":"qh8p19lw"}
+{"time":"2025-06-03T17:43:26.429628+09:00","level":"INFO","msg":"sender: closed","stream_id":"qh8p19lw"}
+{"time":"2025-06-03T17:43:26.429628+09:00","level":"INFO","msg":"writer: Close: closed","stream_id":"qh8p19lw"}
+{"time":"2025-06-03T17:43:26.429628+09:00","level":"INFO","msg":"stream: closed","id":"qh8p19lw"}

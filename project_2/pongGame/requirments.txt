@@ -1,0 +1,6 @@
+gymnasium[atari]
+tensorflow
+opencv-python
+matplotlib
+numpy
+wandb

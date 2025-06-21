@@ -1,0 +1,161 @@
+  0%|                                                                                         | 0/1000 [00:00<?, ?it/s]C:\Users\HEEKWON\anaconda3\envs\rl_a2c\lib\site-packages\gym\utils\passive_env_checker.py:233: DeprecationWarning: `np.bool8` is a deprecated alias for `np.bool_`.  (Deprecated NumPy 1.24)
+  if not isinstance(terminated, (bool, np.bool8)):
+Saving model in ../model/ppo
+model saved
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 13%|██████████▎                                                                  | 134/1000 [13:27<1:26:58,  6.03s/it]
+C:\Users\HEEKWON\anaconda3\envs\rl_a2c\lib\site-packages\gym\utils\passive_env_checker.py:289: UserWarning: [33mWARN: No render fps was declared in the environment (env.metadata['render_fps'] is None or not defined), rendering may occur at inconsistent fps.
+  logger.warn(
+[✔] 영상 저장 완료: ../model/ppo/save_agent_202506030124/test_play.mp4
+[✔] 저장 완료 - 모델: ../model/ppo/save_agent_202506030124/model.tf, 영상: ../model/ppo/save_agent_202506030124/test_play.mp4, 리워드: -19.0
+Traceback (most recent call last):
+  File "D:\Projects\Python\ReinforcementLearning\project_2_a2c\pongGame_A2C\main.py", line 45, in <module>
+    main()
+  File "D:\Projects\Python\ReinforcementLearning\project_2_a2c\pongGame_A2C\main.py", line 24, in main
+    rewards_history = agent.train(pw)
+  File "D:\Projects\Python\ReinforcementLearning\project_2_a2c\pongGame_A2C\agent.py", line 92, in train
+    grads = tape.gradient(loss, self.model.trainable_variables)
+  File "C:\Users\HEEKWON\anaconda3\envs\rl_a2c\lib\site-packages\tensorflow\python\eager\backprop.py", line 1065, in gradient
+    flat_grad = imperative_grad.imperative_grad(
+  File "C:\Users\HEEKWON\anaconda3\envs\rl_a2c\lib\site-packages\tensorflow\python\eager\imperative_grad.py", line 67, in imperative_grad
+    return pywrap_tfe.TFE_Py_TapeGradient(
+  File "C:\Users\HEEKWON\anaconda3\envs\rl_a2c\lib\site-packages\tensorflow\python\eager\backprop.py", line 147, in _gradient_function
+    return grad_fn(mock_op, *out_grads)
+  File "C:\Users\HEEKWON\anaconda3\envs\rl_a2c\lib\site-packages\tensorflow\python\ops\nn_grad.py", line 583, in _Conv2DGrad
+    gen_nn_ops.conv2d_backprop_input(
+  File "C:\Users\HEEKWON\anaconda3\envs\rl_a2c\lib\site-packages\tensorflow\python\ops\gen_nn_ops.py", line 2025, in conv2d_backprop_input
+    _result = pywrap_tfe.TFE_Py_FastPathExecute(
+KeyboardInterrupt

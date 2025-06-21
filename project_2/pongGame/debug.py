@@ -5,7 +5,8 @@ import matplotlib.animation as animation
 
 name = 'ALE/Pong-v5'
 
-agent = the_agent.Agent(possible_actions=[0,2,3],starting_mem_len=50,max_mem_len=750000, starting_epsilon = .5, debug = True)
+agent = the_agent.Agent(possible_actions=[0,2,3],starting_mem_len=50,max_mem_len=750000, starting_epsilon = .5, learn_rate=0.00025, debug = True)
+
 env = environment.make_env(name,agent)
 
 environment.play_episode(name, env,agent, debug = True)

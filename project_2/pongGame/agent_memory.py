@@ -1,5 +1,6 @@
 from collections import deque
 
+
 class Memory():
     def __init__(self,max_len):
         self.max_len = max_len
@@ -13,3 +14,5 @@ class Memory():
         self.actions.append(next_action)
         self.rewards.append(next_frames_reward)
         self.done_flags.append(next_frame_terminal)
+
+

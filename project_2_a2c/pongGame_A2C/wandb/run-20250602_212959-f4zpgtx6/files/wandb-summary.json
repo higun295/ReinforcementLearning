@@ -1,0 +1,1 @@
+{"# Update": 999, "policy_loss": 0.09650418162345886, "value_loss": 0.17656061053276062, "total_loss": 0.2730647921562195, "mean_reward": -0.0234375, "_timestamp": 1748873532.2466717, "_runtime": 6132.789388656616, "_step": 1281, "Game number": 282, "% Update": 1.0, "Reward": -21.0, "Time taken": 3.14, "_wandb": {"runtime": 6146}}

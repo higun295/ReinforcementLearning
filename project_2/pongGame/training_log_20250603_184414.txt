@@ -1,0 +1,47 @@
+=== PONG DQN 학습 로그 ===
+시작 시간: 2025-06-03 18:44:14
+==================================================
+
+Episode   0 | Score:  -13.0 | Steps: 6894 | Epsilon: 0.1000 | Q_μ:  0.126 | Actions(0/2/3): 1321/3050/2523 | Rewards(+/-):  8/21
+Episode   1 | Score:  -12.0 | Steps: 6870 | Epsilon: 0.1000 | Q_μ:  0.121 | Actions(0/2/3): 1427/2972/2471 | Rewards(+/-):  9/21
+Episode   2 | Score:   -8.0 | Steps: 6942 | Epsilon: 0.1000 | Q_μ:  0.143 | Actions(0/2/3): 1440/3010/2492 | Rewards(+/-): 13/21
+Episode   3 | Score:   -4.0 | Steps: 7688 | Epsilon: 0.1000 | Q_μ:  0.147 | Actions(0/2/3): 1612/3298/2778 | Rewards(+/-): 17/21
+Episode   4 | Score:  -11.0 | Steps: 7028 | Epsilon: 0.1000 | Q_μ:  0.113 | Actions(0/2/3): 1453/3050/2525 | Rewards(+/-): 10/21
+Episode   5 | Score:   -3.0 | Steps: 7841 | Epsilon: 0.1000 | Q_μ:  0.139 | Actions(0/2/3): 1657/3381/2803 | Rewards(+/-): 18/21
+Episode   6 | Score:   -8.0 | Steps: 8941 | Epsilon: 0.0800 | Q_μ:  0.132 | Actions(0/2/3): 1889/3773/3279 | Rewards(+/-): 13/21
+Episode   7 | Score:  -15.0 | Steps: 6048 | Epsilon: 0.0500 | Q_μ:  0.135 | Actions(0/2/3): 1546/2135/2367 | Rewards(+/-):  6/21
+Episode   8 | Score:   -3.0 | Steps: 9835 | Epsilon: 0.0500 | Q_μ:  0.119 | Actions(0/2/3): 2673/3502/3660 | Rewards(+/-): 18/21
+Episode   9 | Score:   -5.0 | Steps: 9164 | Epsilon: 0.0500 | Q_μ:  0.111 | Actions(0/2/3): 2508/3260/3396 | Rewards(+/-): 16/21
+Episode  10 | Score:  -11.0 | Steps: 6834 | Epsilon: 0.0500 | Q_μ:  0.114 | Actions(0/2/3): 1802/2346/2686 | Rewards(+/-): 10/21
+Episode  11 | Score:   -7.0 | Steps: 7833 | Epsilon: 0.0500 | Q_μ:  0.118 | Actions(0/2/3): 2299/2456/3078 | Rewards(+/-): 14/21
+Episode  12 | Score:   -3.0 | Steps: 9841 | Epsilon: 0.0500 | Q_μ:  0.111 | Actions(0/2/3): 3033/3029/3779 | Rewards(+/-): 18/21
+Episode  13 | Score:  -12.0 | Steps: 8083 | Epsilon: 0.0500 | Q_μ:  0.115 | Actions(0/2/3): 2580/2496/3007 | Rewards(+/-):  9/21
+Episode  14 | Score:   -2.0 | Steps: 10471 | Epsilon: 0.0500 | Q_μ:  0.102 | Actions(0/2/3): 3273/3161/4037 | Rewards(+/-): 19/21
+Episode  15 | Score:  -14.0 | Steps: 7351 | Epsilon: 0.0500 | Q_μ:  0.145 | Actions(0/2/3): 2145/2441/2765 | Rewards(+/-):  7/21
+Episode  16 | Score:  -10.0 | Steps: 11233 | Epsilon: 0.0500 | Q_μ:  0.118 | Actions(0/2/3): 3465/3779/3989 | Rewards(+/-): 11/21
+Episode  17 | Score:  -10.0 | Steps: 6758 | Epsilon: 0.0500 | Q_μ:  0.122 | Actions(0/2/3): 1911/2440/2407 | Rewards(+/-): 11/21
+Episode  18 | Score:  -12.0 | Steps: 6760 | Epsilon: 0.0500 | Q_μ:  0.100 | Actions(0/2/3): 2231/2201/2328 | Rewards(+/-):  9/21
+Episode  19 | Score:   -8.0 | Steps: 8536 | Epsilon: 0.0500 | Q_μ:  0.083 | Actions(0/2/3): 2618/2931/2987 | Rewards(+/-): 13/21
+Episode  20 | Score:   -3.0 | Steps: 7852 | Epsilon: 0.0500 | Q_μ:  0.128 | Actions(0/2/3): 2459/2790/2603 | Rewards(+/-): 18/21
+Episode  21 | Score:   -8.0 | Steps: 5988 | Epsilon: 0.0500 | Q_μ:  0.104 | Actions(0/2/3): 1773/2069/2146 | Rewards(+/-): 13/21
+Episode  22 | Score:   -2.0 | Steps: 8426 | Epsilon: 0.0500 | Q_μ:  0.107 | Actions(0/2/3): 2540/2904/2982 | Rewards(+/-): 19/21
+Episode  23 | Score:    2.0 | Steps: 9410 | Epsilon: 0.0500 | Q_μ:  0.092 | Actions(0/2/3): 2852/3218/3340 | Rewards(+/-): 21/19
+Episode  24 | Score:  -15.0 | Steps: 5254 | Epsilon: 0.0500 | Q_μ:  0.067 | Actions(0/2/3): 1553/1875/1826 | Rewards(+/-):  6/21
+Episode  25 | Score:  -10.0 | Steps: 6518 | Epsilon: 0.0500 | Q_μ:  0.077 | Actions(0/2/3): 1973/2433/2112 | Rewards(+/-): 11/21
+Episode  26 | Score:   -6.0 | Steps: 8065 | Epsilon: 0.0500 | Q_μ:  0.099 | Actions(0/2/3): 2502/2814/2749 | Rewards(+/-): 15/21
+Episode  27 | Score:   -1.0 | Steps: 12701 | Epsilon: 0.0500 | Q_μ:  0.117 | Actions(0/2/3): 3865/4449/4387 | Rewards(+/-): 20/21
+Episode  28 | Score:  -11.0 | Steps: 8364 | Epsilon: 0.0500 | Q_μ:  0.104 | Actions(0/2/3): 2631/2849/2884 | Rewards(+/-): 10/21
+Episode  29 | Score:  -13.0 | Steps: 5818 | Epsilon: 0.0500 | Q_μ:  0.087 | Actions(0/2/3): 1681/1920/2217 | Rewards(+/-):  8/21
+
+==================================================
+=== 최종 학습 결과 요약 ===
+종료 시간: 2025-06-04 04:23:06
+총 에피소드: 30
+최고 점수: 2.0
+평균 점수 (최근 100): -7.93
+총 학습 스텝: 239347
+총 학습 횟수: 189344
+최종 Epsilon: 0.0500
+메모리 사용량: 239437 / 750000
+최종 모델: pong_dqn_final_20250604_042306.hdf5
+==================================================

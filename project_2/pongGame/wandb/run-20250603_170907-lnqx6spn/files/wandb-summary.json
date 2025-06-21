@@ -1,0 +1,1 @@
+{"score":-1,"_wandb":{"runtime":1813},"total_timesteps":44392,"avg_score_100":-8,"weights_saved":true,"epsilon":0.1,"weights_saved_at_step":50000,"_runtime":1797.9739759,"max_score":-1,"episode_duration":303.6093997955322,"learns_count":0,"episode_steps":8529,"_step":6,"episode":5,"memory_size":44410,"_timestamp":1.7489399452605479e+09}

@@ -1,0 +1,312 @@
+WARNING:tensorflow:From C:\Users\HEEKWON\anaconda3\envs\reinforcementLearningProject_2\lib\site-packages\keras\src\backend.py:873: The name tf.get_default_graph is deprecated. Please use tf.compat.v1.get_default_graph instead.
+Model: "sequential"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #
+=================================================================
+ conv2d (Conv2D)             (None, 20, 20, 32)        8224
+
+ conv2d_1 (Conv2D)           (None, 9, 9, 64)          32832
+
+ conv2d_2 (Conv2D)           (None, 7, 7, 64)          36928
+
+ flatten (Flatten)           (None, 3136)              0
+
+ dense (Dense)               (None, 512)               1606144
+
+ dense_1 (Dense)             (None, 3)                 1539
+
+=================================================================
+Total params: 1685667 (6.43 MB)
+Trainable params: 1685667 (6.43 MB)
+Non-trainable params: 0 (0.00 Byte)
+_________________________________________________________________
+
+Agent Initialized
+
+기존 가중치 로드 완료!
+
+=== Episode: 0 ===
+Score: -13.0 | Max: -13.0 | Avg(100): -13.00
+Steps: 6894 | Duration: 213.78s
+Epsilon: 0.1000 | Learns: 0
+Q-values: μ=0.126, σ=0.006
+Actions: 0=1321, 2=3050, 3=2523
+Rewards: +8, -21, Σ=-13.0
+
+=== Episode: 1 ===
+Score: -12.0 | Max: -12.0 | Avg(100): -12.50
+Steps: 6870 | Duration: 210.02s
+Epsilon: 0.1000 | Learns: 0
+Q-values: μ=0.121, σ=0.002
+Actions: 0=1427, 2=2972, 3=2471
+Rewards: +9, -21, Σ=-12.0
+
+=== Episode: 2 ===
+Score: -8.0 | Max: -8.0 | Avg(100): -11.00
+Steps: 6942 | Duration: 214.13s
+Epsilon: 0.1000 | Learns: 0
+Q-values: μ=0.143, σ=0.001
+Actions: 0=1440, 2=3010, 3=2492
+Rewards: +13, -21, Σ=-8.0
+
+=== Episode: 3 ===
+Score: -4.0 | Max: -4.0 | Avg(100): -9.25
+Steps: 7688 | Duration: 249.52s
+Epsilon: 0.1000 | Learns: 0
+Q-values: μ=0.147, σ=0.003
+Actions: 0=1612, 2=3298, 3=2778
+Rewards: +17, -21, Σ=-4.0
+
+=== Episode: 4 ===
+Score: -11.0 | Max: -4.0 | Avg(100): -9.60
+Steps: 7028 | Duration: 221.31s
+Epsilon: 0.1000 | Learns: 0
+Q-values: μ=0.113, σ=0.002
+Actions: 0=1453, 2=3050, 3=2525
+Rewards: +10, -21, Σ=-11.0
+
+=== Episode: 5 ===
+Score: -3.0 | Max: -3.0 | Avg(100): -8.50
+Steps: 7841 | Duration: 245.14s
+Epsilon: 0.1000 | Learns: 0
+Q-values: μ=0.139, σ=0.005
+Actions: 0=1657, 2=3381, 3=2803
+Rewards: +18, -21, Σ=-3.0
+
+WARNING:tensorflow:From C:\Users\HEEKWON\anaconda3\envs\reinforcementLearningProject_2\lib\site-packages\keras\src\utils\tf_utils.py:492: The name tf.ragged.RaggedTensorValue is deprecated. Please use tf.compat.v1.ragged.RaggedTensorValue instead.
+
+WARNING:tensorflow:From C:\Users\HEEKWON\anaconda3\envs\reinforcementLearningProject_2\lib\site-packages\keras\src\utils\tf_utils.py:492: The name tf.ragged.RaggedTensorValue is deprecated. Please use tf.compat.v1.ragged.RaggedTensorValue instead.
+
+=== Episode: 6 ===
+Score: -8.0 | Max: -3.0 | Avg(100): -8.43
+Steps: 8941 | Duration: 599.00s
+Epsilon: 0.0800 | Learns: 2224
+Q-values: μ=0.132, σ=0.003
+Actions: 0=1889, 2=3773, 3=3279
+Rewards: +13, -21, Σ=-8.0
+
+=== Episode: 7 ===
+Score: -15.0 | Max: -3.0 | Avg(100): -9.25
+Steps: 6048 | Duration: 965.64s
+Epsilon: 0.0500 | Learns: 8271
+Q-values: μ=0.135, σ=0.002
+Actions: 0=1546, 2=2135, 3=2367
+Rewards: +6, -21, Σ=-15.0
+
+Target model updated (#1)
+
+=== Episode: 8 ===
+Score: -3.0 | Max: -3.0 | Avg(100): -8.56
+Steps: 9835 | Duration: 1589.85s
+Epsilon: 0.0500 | Learns: 18105
+Q-values: μ=0.119, σ=0.003
+Actions: 0=2673, 2=3502, 3=3660
+Rewards: +18, -21, Σ=-3.0
+
+Target model updated (#2)
+
+=== Episode: 9 ===
+Score: -5.0 | Max: -3.0 | Avg(100): -8.20
+Steps: 9164 | Duration: 1461.70s
+Epsilon: 0.0500 | Learns: 27268
+Q-values: μ=0.111, σ=0.023
+Actions: 0=2508, 2=3260, 3=3396
+Rewards: +16, -21, Σ=-5.0
+
+Target model updated (#3)
+
+=== Episode: 10 ===
+Score: -11.0 | Max: -3.0 | Avg(100): -8.45
+Steps: 6834 | Duration: 1096.83s
+Epsilon: 0.0500 | Learns: 34101
+Q-values: μ=0.114, σ=0.003
+Actions: 0=1802, 2=2346, 3=2686
+Rewards: +10, -21, Σ=-11.0
+
+Target model updated (#4)
+
+=== Episode: 11 ===
+Score: -7.0 | Max: -3.0 | Avg(100): -8.33
+Steps: 7833 | Duration: 1239.93s
+Epsilon: 0.0500 | Learns: 41933
+Q-values: μ=0.118, σ=0.007
+Actions: 0=2299, 2=2456, 3=3078
+Rewards: +14, -21, Σ=-7.0
+
+Target model updated (#5)
+
+=== Episode: 12 ===
+Score: -3.0 | Max: -3.0 | Avg(100): -7.92
+Steps: 9841 | Duration: 1656.32s
+Epsilon: 0.0500 | Learns: 51773
+Q-values: μ=0.111, σ=0.002
+Actions: 0=3033, 2=3029, 3=3779
+Rewards: +18, -21, Σ=-3.0
+
+=== Episode: 13 ===
+Score: -12.0 | Max: -3.0 | Avg(100): -8.21
+Steps: 8083 | Duration: 1396.17s
+Epsilon: 0.0500 | Learns: 59855
+Q-values: μ=0.115, σ=0.006
+Actions: 0=2580, 2=2496, 3=3007
+Rewards: +9, -21, Σ=-12.0
+
+Target model updated (#6)
+
+Target model updated (#7)
+
+=== Episode: 14 ===
+Score: -2.0 | Max: -2.0 | Avg(100): -7.80
+Steps: 10471 | Duration: 2006.98s
+Epsilon: 0.0500 | Learns: 70325
+Q-values: μ=0.102, σ=0.007
+Actions: 0=3273, 2=3161, 3=4037
+Rewards: +19, -21, Σ=-2.0
+
+=== Episode: 15 ===
+Score: -14.0 | Max: -2.0 | Avg(100): -8.19
+Steps: 7351 | Duration: 1498.42s
+Epsilon: 0.0500 | Learns: 77675
+Q-values: μ=0.145, σ=0.006
+Actions: 0=2145, 2=2441, 3=2765
+Rewards: +7, -21, Σ=-14.0
+
+Target model updated (#8)
+
+=== Episode: 16 ===
+Score: -10.0 | Max: -2.0 | Avg(100): -8.29
+Steps: 11233 | Duration: 1964.65s
+Epsilon: 0.0500 | Learns: 88907
+Q-values: μ=0.118, σ=0.003
+Actions: 0=3465, 2=3779, 3=3989
+Rewards: +11, -21, Σ=-10.0
+
+Target model updated (#9)
+
+=== Episode: 17 ===
+Score: -10.0 | Max: -2.0 | Avg(100): -8.39
+Steps: 6758 | Duration: 1214.91s
+Epsilon: 0.0500 | Learns: 95664
+Q-values: μ=0.122, σ=0.005
+Actions: 0=1911, 2=2440, 3=2407
+Rewards: +11, -21, Σ=-10.0
+
+Target model updated (#10)
+
+=== Episode: 18 ===
+Score: -12.0 | Max: -2.0 | Avg(100): -8.58
+Steps: 6760 | Duration: 1212.80s
+Epsilon: 0.0500 | Learns: 102423
+Q-values: μ=0.100, σ=0.004
+Actions: 0=2231, 2=2201, 3=2328
+Rewards: +9, -21, Σ=-12.0
+
+Target model updated (#11)
+
+=== Episode: 19 ===
+Score: -8.0 | Max: -2.0 | Avg(100): -8.55
+Steps: 8536 | Duration: 1445.50s
+Epsilon: 0.0500 | Learns: 110958
+Q-values: μ=0.083, σ=0.003
+Actions: 0=2618, 2=2931, 3=2987
+Rewards: +13, -21, Σ=-8.0
+
+=== Episode: 20 ===
+Score: -3.0 | Max: -2.0 | Avg(100): -8.29
+Steps: 7852 | Duration: 1348.30s
+Epsilon: 0.0500 | Learns: 118809
+Q-values: μ=0.128, σ=0.004
+Actions: 0=2459, 2=2790, 3=2603
+Rewards: +18, -21, Σ=-3.0
+
+Target model updated (#12)
+
+=== Episode: 21 ===
+Score: -8.0 | Max: -2.0 | Avg(100): -8.27
+Steps: 5988 | Duration: 1018.16s
+Epsilon: 0.0500 | Learns: 124796
+Q-values: μ=0.104, σ=0.009
+Actions: 0=1773, 2=2069, 3=2146
+Rewards: +13, -21, Σ=-8.0
+
+Target model updated (#13)
+
+=== Episode: 22 ===
+Score: -2.0 | Max: -2.0 | Avg(100): -8.00
+Steps: 8426 | Duration: 1446.98s
+Epsilon: 0.0500 | Learns: 133221
+Q-values: μ=0.107, σ=0.007
+Actions: 0=2540, 2=2904, 3=2982
+Rewards: +19, -21, Σ=-2.0
+
+Target model updated (#14)
+
+=== Episode: 23 ===
+Score: 2.0 | Max: 2.0 | Avg(100): -7.58
+Steps: 9410 | Duration: 1642.24s
+Epsilon: 0.0500 | Learns: 142630
+Q-values: μ=0.092, σ=0.000
+Actions: 0=2852, 2=3218, 3=3340
+Rewards: +21, -19, Σ=2.0
+
+=== Episode: 24 ===
+Score: -15.0 | Max: 2.0 | Avg(100): -7.88
+Steps: 5254 | Duration: 929.50s
+Epsilon: 0.0500 | Learns: 147883
+Q-values: μ=0.067, σ=0.009
+Actions: 0=1553, 2=1875, 3=1826
+Rewards: +6, -21, Σ=-15.0
+
+Target model updated (#15)
+
+=== Episode: 25 ===
+Score: -10.0 | Max: 2.0 | Avg(100): -7.96
+Steps: 6518 | Duration: 1161.80s
+Epsilon: 0.0500 | Learns: 154400
+Q-values: μ=0.077, σ=0.002
+Actions: 0=1973, 2=2433, 3=2112
+Rewards: +11, -21, Σ=-10.0
+
+Target model updated (#16)
+
+=== Episode: 26 ===
+Score: -6.0 | Max: 2.0 | Avg(100): -7.89
+Steps: 8065 | Duration: 1464.35s
+Epsilon: 0.0500 | Learns: 162464
+Q-values: μ=0.099, σ=0.006
+Actions: 0=2502, 2=2814, 3=2749
+Rewards: +15, -21, Σ=-6.0
+
+Target model updated (#17)
+
+=== Episode: 27 ===
+Score: -1.0 | Max: 2.0 | Avg(100): -7.64
+Steps: 12701 | Duration: 2342.91s
+Epsilon: 0.0500 | Learns: 175164
+Q-values: μ=0.117, σ=0.004
+Actions: 0=3865, 2=4449, 3=4387
+Rewards: +20, -21, Σ=-1.0
+
+Target model updated (#18)
+
+=== Episode: 28 ===
+Score: -11.0 | Max: 2.0 | Avg(100): -7.76
+Steps: 8364 | Duration: 1568.31s
+Epsilon: 0.0500 | Learns: 183527
+Q-values: μ=0.104, σ=0.004
+Actions: 0=2631, 2=2849, 3=2884
+Rewards: +10, -21, Σ=-11.0
+
+=== Episode: 29 ===
+Score: -13.0 | Max: 2.0 | Avg(100): -7.93
+Steps: 5818 | Duration: 1105.42s
+Epsilon: 0.0500 | Learns: 189344
+Q-values: μ=0.087, σ=0.003
+Actions: 0=1681, 2=1920, 3=2217
+Rewards: +8, -21, Σ=-13.0
+
+🎯 학습 완료! 최종 모델 저장 중...
+✅ 최종 모델 저장 완료: pong_dqn_final_20250604_042306.hdf5
+✅ 최고 성능 모델 저장 완료: pong_dqn_best_2.0pts_20250604_042306.hdf5
+
+✅ 학습 완료! 로그 파일이 저장되었습니다: training_log_20250603_184414.txt

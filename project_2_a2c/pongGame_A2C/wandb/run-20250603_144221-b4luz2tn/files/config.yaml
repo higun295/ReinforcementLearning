@@ -1,0 +1,71 @@
+wandb_version: 1
+
+agent:
+  desc: null
+  value: A2C
+input_shape:
+  desc: null
+  value:
+  - 84
+  - 84
+  - 4
+batch_size:
+  desc: null
+  value: 128
+n_updates:
+  desc: null
+  value: 3000
+hidden:
+  desc: null
+  value: 512
+learning_rate:
+  desc: null
+  value: 0.0008
+gamma:
+  desc: null
+  value: 0.99
+value_c:
+  desc: null
+  value: 1.0
+entropy_c:
+  desc: null
+  value: 0.03
+std_adv:
+  desc: null
+  value: true
+test_name:
+  desc: null
+  value: a2c_high_exploration
+operating_system:
+  desc: null
+  value: nt
+_wandb:
+  desc: null
+  value:
+    python_version: 3.9.22
+    cli_version: 0.16.6
+    framework: keras
+    is_jupyter_run: false
+    is_kaggle_kernel: false
+    start_time: 1748929341.0
+    t:
+      1:
+      - 2
+      - 3
+      - 55
+      2:
+      - 2
+      - 3
+      - 55
+      3:
+      - 2
+      - 13
+      - 15
+      - 16
+      - 23
+      4: 3.9.22
+      5: 0.16.6
+      8:
+      - 3
+      - 5
+      13: windows-amd64

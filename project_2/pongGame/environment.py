@@ -1,4 +1,6 @@
 import gymnasium as gym
+import wandb
+
 import preprocess_frame as ppf
 import numpy as np
 
@@ -16,25 +18,25 @@ def initialize_new_game(name, env, agent):
         agent.memory.add_experience(starting_frame, dummy_reward, dummy_action, dummy_done)
 
 def make_env(name, agent):
-    env = gym.make(name)
+    env = gym.make(name, render_mode="rgb_array")
     return env
 
 def take_step(name, env, agent, score, debug):
-    
-    #1 and 2: Update timesteps and save weights
+    # 1 and 2: Update timesteps and save weights
     agent.total_timesteps += 1
-    if agent.total_timesteps % 50000 == 0:
-      agent.model.save_weights('recent_weights.hdf5')
-      print('\nWeights saved!')
 
     #3: Take action
-    next_frame, next_frames_reward, next_frame_terminal, info = env.step(agent.memory.actions[-1])
+    next_frame, next_frames_reward, terminated, truncated, info = env.step(agent.memory.actions[-1])
+    next_frame_terminal = terminated or truncated
     
     #4: Get next state
     next_frame = ppf.resize_frame(next_frame)
-    new_state = [agent.memory.frames[-3], agent.memory.frames[-2], agent.memory.frames[-1], next_frame]
-    new_state = np.moveaxis(new_state,0,2)/255 #We have to do this to get it into keras's goofy format of [batch_size,rows,columns,channels]
-    new_state = np.expand_dims(new_state,0) #^^^
+    new_state = [agent.memory.frames[-3]
+                , agent.memory.frames[-2]
+                , agent.memory.frames[-1]
+                , next_frame]
+    new_state = np.moveaxis(new_state,0,2)/255
+    new_state = np.expand_dims(new_state,0)
     
     #5: Get next action, using next state
     next_action = agent.get_action(new_state)
